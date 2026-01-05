@@ -13,7 +13,7 @@ const productService = new ProductService(productRepo);
 
 app.get('/', async (c) => {
   const products = await productService.getAllProducts();
-  const drawerId = "main-cart-drawer";
+  const drawerId = "main_cart_drawer";
   const toggleFn = `toggle_${drawerId}()`;
 
   return c.html(

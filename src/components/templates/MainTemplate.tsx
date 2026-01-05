@@ -16,7 +16,7 @@ export const MainTemplate = ({
   headerTitle, 
   isAuthenticated 
 }: MainTemplateProps) => {
-  const drawerId = "app-cart-drawer";
+  const drawerId = "app_cart_drawer";
   const toggleFn = `toggle_${drawerId}()`;
 
   return (

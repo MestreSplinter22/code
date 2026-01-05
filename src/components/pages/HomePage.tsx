@@ -14,7 +14,7 @@ interface HomePageProps {
 }
 
 export const HomePage = ({ products, isAuthenticated }: HomePageProps) => {
-  const drawerId = "home-cart-drawer";
+  const drawerId = "home_cart_drawer";
   const toggleFn = `toggle_${drawerId}()`;
 
   return (

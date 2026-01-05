@@ -28,16 +28,20 @@ export const CartDrawer = ({
   total,
   onClose,
   onRemoveItem = (id) => console.log('Remove item:', id),
-  id = 'cart-drawer-component'
+  id = 'cart_drawer_component'
 }: CartDrawerProps) => {
   const hasItems = items.length > 0;
   const overlayId = `${id}-overlay`;
   const drawerId = `${id}-content`;
+  
+  // Sanitiza o ID para ser usado como nome de função JS (substitui hifens por underscores)
+  const safeId = id.replace(/-/g, '_');
+  const functionName = `toggle_${safeId}`;
 
   // Script encapsulado para este componente específico
   const scriptContent = `
     (function() {
-       window['toggle_${id}'] = function() {
+       window['${functionName}'] = function() {
           const drawer = document.getElementById('${drawerId}');
           const overlay = document.getElementById('${overlayId}');
           if (!drawer || !overlay) return;
@@ -64,7 +68,7 @@ export const CartDrawer = ({
   `;
 
   // Se onClose não for fornecido, usa a função gerada internamente
-  const closeAction = onClose || `toggle_${id}()`;
+  const closeAction = onClose || `${functionName}()`;
 
   return (
     <>
