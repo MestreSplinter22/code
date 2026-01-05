@@ -1,5 +1,5 @@
-import { Button } from '../atoms/Button.tsx';
-import { Icon } from '../atoms/Icon.tsx';
+import { Button } from '../../atoms/Button.tsx';
+import { Icon } from '../../atoms/Icon.tsx';
 
 interface ProductActionProps {
   isSoldOut: boolean;

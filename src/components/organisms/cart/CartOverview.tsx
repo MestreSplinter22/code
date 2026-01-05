@@ -1,7 +1,6 @@
-// src/components/organisms/CartOverview.tsx
-import { CartItem, CartItemProps } from '../molecules/CartItem.tsx';
+import { CartItem, CartItemProps } from '../../molecules/cart/CartItem.tsx';
 import { CartSummary } from './CartSummary.tsx';
-import { CartEmptyState } from '../molecules/CartEmptyState.tsx';
+import { CartEmptyState } from '../../molecules/cart/CartEmptyState.tsx';
 
 interface CartOverviewProps {
   items: CartItemProps[];

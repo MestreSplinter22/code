@@ -1,12 +1,11 @@
-// src/components/templates/MainTemplate.tsx
 import { PropsWithChildren } from "hono/jsx";
-import { Layout } from "./Layout.tsx"; // O seu Layout base (html/head/body)
-import { Navbar } from "../organisms/Navbar.tsx";
-import { CartDrawer } from "../organisms/CartDrawer.tsx";
+import { Layout } from "./Layout.tsx";
+import { Navbar } from "../organisms/common/Navbar.tsx";
+import { CartDrawer } from "../organisms/cart/CartDrawer.tsx";
 
 interface MainTemplateProps extends PropsWithChildren {
-  pageTitle: string; // Título da aba do navegador
-  headerTitle: string; // Título H1 visual da página
+  pageTitle: string;
+  headerTitle: string;
   isAuthenticated: boolean;
 }
 
@@ -17,7 +16,7 @@ export const MainTemplate = ({
   isAuthenticated 
 }: MainTemplateProps) => {
   const drawerId = "app_cart_drawer";
-  const toggleFn = `toggle_${drawerId}()`;
+  const toggleFn = `window.AdslyDrawer && window.AdslyDrawer.toggle('${drawerId}')`;
 
   return (
     <Layout 

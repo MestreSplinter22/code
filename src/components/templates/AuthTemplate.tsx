@@ -1,7 +1,7 @@
 // src/components/templates/AuthTemplate.tsx
 import { PropsWithChildren } from "hono/jsx";
 import { Layout } from "./Layout.tsx";
-import { Navbar } from "../organisms/Navbar.tsx";
+import { Navbar } from "../organisms/common/Navbar.tsx";
 
 interface AuthTemplateProps extends PropsWithChildren {
   title: string;

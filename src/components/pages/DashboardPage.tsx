@@ -1,7 +1,7 @@
 // src/components/pages/DashboardPage.tsx
 import { MainTemplate } from '../templates/MainTemplate.tsx';
 import { OrderList } from '../organisms/OrderList.tsx';
-import { OrderCardProps } from '../molecules/OrderCard.tsx';
+import { OrderCardProps } from '../molecules/orders/OrderCard.tsx';
 
 interface DashboardPageProps {
   orders: OrderCardProps[];

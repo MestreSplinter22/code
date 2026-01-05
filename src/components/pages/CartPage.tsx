@@ -1,21 +1,14 @@
 import { MainTemplate } from '../templates/MainTemplate.tsx';
-import { CartOverview } from '../organisms/CartOverview.tsx';
+import { CartOverview } from '../organisms/cart/CartOverview.tsx';
 import { Product } from '../../modules/products/product.entity.ts';
-import { CartItemProps } from '../molecules/CartItem.tsx';
+import { CartItemProps } from '../molecules/cart/CartItem.tsx';
+import { productToCartItemProps } from '../../mappers/cart.mapper.ts';
 
 interface CartPageProps {
   isAuthenticated: boolean;
   items: Product[];
   total: number;
 }
-
-// Mapper function
-const productToCartItemProps = (product: Product): CartItemProps => ({
-  id: product.id,
-  title: product.title,
-  price: product.price,
-  imageUrl: product.imageUrl,
-});
 
 export const CartPage = ({ isAuthenticated, items, total }: CartPageProps) => {
 

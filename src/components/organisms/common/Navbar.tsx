@@ -1,4 +1,4 @@
-import { Button } from '../atoms/Button.tsx';
+import { UserNavActions } from '../../molecules/auth/UserNavActions.tsx';
 
 interface NavbarProps {
   isAuthenticated?: boolean;
@@ -24,6 +24,8 @@ export const Navbar = ({
     dashboard = "#",
     logout = "#"
   } = routes;
+  
+  const authRoutes = { login, dashboard, logout };
 
   return (
     <nav className="border-b border-zinc-800 bg-black/95 backdrop-blur-sm sticky top-0 z-50">
@@ -69,20 +71,7 @@ export const Navbar = ({
             </button>
 
             {/* Lógica de Autenticação */}
-            {isAuthenticated ? (
-              <div className="flex items-center gap-4">
-                <a href={dashboard} className="text-sm font-medium text-gray-300 hover:text-yellow-500 transition">
-                  Meus Pedidos
-                </a>
-                <a href={logout} className="text-sm font-medium text-red-500 hover:text-red-400 transition border border-red-900/50 px-3 py-1 rounded-full hover:bg-red-900/20">
-                  Sair
-                </a>
-              </div>
-            ) : (
-              <a href={login}>
-                <Button variant="primary" className="px-5 py-2 text-sm">Entrar</Button>
-              </a>
-            )}
+            <UserNavActions isAuthenticated={isAuthenticated} routes={authRoutes} />
           </div>
         </div>
       </div>

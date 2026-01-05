@@ -1,5 +1,5 @@
 import { Button } from '../../atoms/Button.tsx';
-import { FormField } from '../../molecules/FormField.tsx';
+import { FormField } from '../FormField.tsx';
 
 interface LoginFormProps {
   error?: string;

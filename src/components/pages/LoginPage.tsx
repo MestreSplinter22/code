@@ -1,5 +1,5 @@
 import { AuthTemplate } from '../templates/AuthTemplate.tsx';
-import { LoginForm } from '../organisms/auth/LoginForm.tsx';
+import { LoginForm } from '../molecules/auth/LoginForm.tsx';
 
 interface LoginPageProps {
   error?: string;

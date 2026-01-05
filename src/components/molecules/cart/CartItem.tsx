@@ -1,5 +1,5 @@
-import { Icon } from '../atoms/Icon.tsx';
-import { formatCurrency } from '../../utils/formatCurrency.ts';
+import { Icon } from '../../atoms/Icon.tsx';
+import { formatCurrency } from '../../../utils/formatCurrency.ts';
 
 export interface CartItemProps {
   id: string;

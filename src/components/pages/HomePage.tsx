@@ -1,12 +1,12 @@
 import { Layout } from '../templates/Layout.tsx';
-import { Navbar } from '../organisms/Navbar.tsx';
-import { HeroSection } from '../organisms/HeroSection.tsx';
+import { Navbar } from '../organisms/common/Navbar.tsx';
+import { HeroSection } from '../organisms/sections/HeroSection.tsx';
 import { CtaBanner } from '../molecules/CtaBanner.tsx';
-import { Footer } from '../organisms/Footer.tsx';
-import { ProductCard } from '../molecules/ProductCard.tsx';
+import { Footer } from '../organisms/common/Footer.tsx';
+import { ProductCard } from '../molecules/product/ProductCard.tsx';
 import { Product } from '../../modules/products/product.entity.ts';
-import { formatCurrency } from '../../utils/formatCurrency.ts';
-import { CartDrawer } from '../organisms/CartDrawer.tsx';
+import { CartDrawer } from '../organisms/cart/CartDrawer.tsx';
+import { productToCardProps } from '../../mappers/product.mapper.ts';
 
 interface HomePageProps {
   products: Product[];
@@ -15,7 +15,7 @@ interface HomePageProps {
 
 export const HomePage = ({ products, isAuthenticated }: HomePageProps) => {
   const drawerId = "home_cart_drawer";
-  const toggleFn = `toggle_${drawerId}()`;
+  const toggleFn = `window.AdslyDrawer && window.AdslyDrawer.toggle('${drawerId}')`;
 
   return (
     <Layout 
@@ -52,14 +52,7 @@ export const HomePage = ({ products, isAuthenticated }: HomePageProps) => {
           {products.map((product) => (
             <ProductCard 
               key={product.id} 
-              // CORREÇÃO: Passando props individuais ao invés do objeto 'product'
-              id={product.id}
-              title={product.title}
-              formattedPrice={formatCurrency(product.price)}
-              formattedOriginalPrice={product.originalPrice ? formatCurrency(product.originalPrice) : undefined}
-              imageUrl={product.imageUrl}
-              category={product.category}
-              isSoldOut={product.status === 'sold_out'} // Mapeamento de lógica de UI
+              {...productToCardProps(product)}
             />
           ))}
         </div>

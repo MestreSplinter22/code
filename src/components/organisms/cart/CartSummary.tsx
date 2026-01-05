@@ -1,6 +1,5 @@
-// src/components/organisms/CartSummary.tsx
-import { Button } from '../atoms/Button.tsx';
-import { formatCurrency } from '../../utils/formatCurrency.ts';
+import { Button } from '../../atoms/Button.tsx';
+import { formatCurrency } from '../../../utils/formatCurrency.ts';
 
 interface CartSummaryProps {
   total: number;
@@ -9,7 +8,6 @@ interface CartSummaryProps {
 }
 
 export const CartSummary = ({ total, isAuthenticated, hasItems }: CartSummaryProps) => {
-  // Encapsulamento da formatação (Poderia ser um utilitário separado também)
   const formattedTotal = formatCurrency(total);
 
   return (

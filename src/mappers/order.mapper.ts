@@ -1,5 +1,5 @@
 import { Order } from '../modules/orders/order.entity.ts';
-import { OrderCardProps } from '../components/molecules/OrderCard.tsx';
+import { OrderCardProps } from '../components/molecules/orders/OrderCard.tsx';
 
 export const orderToOrderCardProps = (order: Order): OrderCardProps => ({
   id: order.id,

@@ -1,8 +1,8 @@
-import { CartItem } from '../molecules/CartItem.tsx';
-import { CartDrawerHeader } from '../molecules/cart/CartDrawerHeader.tsx';
-import { CartDrawerFooter } from '../molecules/cart/CartDrawerFooter.tsx';
-import { CartDrawerEmpty } from '../molecules/cart/CartDrawerEmpty.tsx';
-import { CartDrawerLoginRequired } from '../molecules/cart/CartDrawerLoginRequired.tsx';
+import { CartItem } from '../../molecules/cart/CartItem.tsx';
+import { CartDrawerHeader } from '../../molecules/cart/CartDrawerHeader.tsx';
+import { CartDrawerFooter } from '../../molecules/cart/CartDrawerFooter.tsx';
+import { CartDrawerEmpty } from '../../molecules/cart/CartDrawerEmpty.tsx';
+import { CartDrawerLoginRequired } from '../../molecules/cart/CartDrawerLoginRequired.tsx';
 
 // Interface para os dados do item (sem handlers)
 export interface CartDrawerItemData {
@@ -34,41 +34,17 @@ export const CartDrawer = ({
   const overlayId = `${id}-overlay`;
   const drawerId = `${id}-content`;
   
-  // Sanitiza o ID para ser usado como nome de função JS (substitui hifens por underscores)
-  const safeId = id.replace(/-/g, '_');
-  const functionName = `toggle_${safeId}`;
+  // Read script content
+  let scriptContent = "";
+  try {
+      scriptContent = Deno.readTextFileSync("src/scripts/ui-behaviors/drawer.js");
+  } catch (e) {
+      console.error("Failed to load drawer script", e);
+  }
 
-  // Script encapsulado para este componente específico
-  const scriptContent = `
-    (function() {
-       window['${functionName}'] = function() {
-          const drawer = document.getElementById('${drawerId}');
-          const overlay = document.getElementById('${overlayId}');
-          if (!drawer || !overlay) return;
-          
-          if (drawer.classList.contains('translate-x-full')) {
-            // Abrir
-            overlay.classList.remove('hidden');
-            setTimeout(() => {
-               overlay.classList.remove('opacity-0');
-               drawer.classList.remove('translate-x-full');
-            }, 10);
-            document.body.style.overflow = 'hidden';
-          } else {
-            // Fechar
-            drawer.classList.add('translate-x-full');
-            overlay.classList.add('opacity-0');
-            setTimeout(() => {
-               overlay.classList.add('hidden');
-               document.body.style.overflow = '';
-            }, 300);
-          }
-       }
-    })();
-  `;
-
-  // Se onClose não for fornecido, usa a função gerada internamente
-  const closeAction = onClose || `${functionName}()`;
+  // Use the global function defined in drawer.js
+  const defaultCloseAction = `window.AdslyDrawer && window.AdslyDrawer.toggle('${id}')`;
+  const closeAction = onClose || defaultCloseAction;
 
   return (
     <>
