@@ -1,5 +1,5 @@
 import { MainTemplate } from '../templates/MainTemplate.tsx';
-import { CartOverview } from '../organisms/cart/CartOverview.tsx';
+import { CartOverview } from '../features/cart/components/CartOverview.tsx';
 import { Product } from '../../modules/products/product.entity.ts';
 import { CartItemProps } from '../molecules/cart/CartItem.tsx';
 import { productToCartItemProps } from '../../mappers/cart.mapper.ts';

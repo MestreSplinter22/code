@@ -1,6 +1,6 @@
 // src/components/molecules/cart/CartDrawerLoginRequired.tsx
-import { Icon } from '../../atoms/Icon.tsx';
-import { Button } from '../../atoms/Button.tsx';
+import { Icon } from '../../../atoms/Icon.tsx';
+import { Button } from '../../../atoms/Button.tsx';
 
 export const CartDrawerLoginRequired = () => (
   <div className="h-full flex flex-col items-center justify-center text-center space-y-6">

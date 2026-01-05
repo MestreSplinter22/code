@@ -1,6 +1,6 @@
-import { CartItem, CartItemProps } from '../../molecules/cart/CartItem.tsx';
+import { CartItem, CartItemProps } from '../../../molecules/cart/CartItem.tsx';
 import { CartSummary } from './CartSummary.tsx';
-import { CartEmptyState } from '../../molecules/cart/CartEmptyState.tsx';
+import { CartEmptyState } from './CartEmptyState.tsx';
 
 interface CartOverviewProps {
   items: CartItemProps[];
@@ -20,6 +20,7 @@ export const CartOverview = ({ items, total, isAuthenticated }: CartOverviewProp
             <CartItem 
               key={item.id}
               {...item}
+              removeActionUrl="/cart/remove"
             />
           ))
         ) : (

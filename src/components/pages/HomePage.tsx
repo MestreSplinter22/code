@@ -3,9 +3,9 @@ import { Navbar } from '../organisms/common/Navbar.tsx';
 import { HeroSection } from '../organisms/sections/HeroSection.tsx';
 import { CtaBanner } from '../molecules/CtaBanner.tsx';
 import { Footer } from '../organisms/common/Footer.tsx';
-import { ProductCard } from '../molecules/product/ProductCard.tsx';
+import { ProductCard } from '../features/products/components/ProductCard.tsx';
 import { Product } from '../../modules/products/product.entity.ts';
-import { CartDrawer } from '../organisms/cart/CartDrawer.tsx';
+import { CartDrawer } from '../features/cart/components/CartDrawer.tsx';
 import { productToCardProps } from '../../mappers/product.mapper.ts';
 
 interface HomePageProps {
@@ -59,7 +59,12 @@ export const HomePage = ({ products, isAuthenticated, drawerScript }: HomePagePr
           ))}
         </div>
       
-        <CtaBanner />
+        <CtaBanner 
+          title="Não encontrou o que procurava?"
+          description="Atendemos sob encomenda! Nos peça no WhatsApp."
+          buttonText="Fazer pedido personalizado (WhatsApp)"
+          buttonLink="#"
+        />
       </main>
 
       <Footer />

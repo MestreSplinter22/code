@@ -1,4 +1,4 @@
-import { UserNavActions } from '../../molecules/auth/UserNavActions.tsx';
+import { UserNavActions } from '../../features/auth/components/UserNavActions.tsx';
 
 interface NavbarProps {
   isAuthenticated?: boolean;

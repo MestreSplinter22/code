@@ -1,8 +1,8 @@
-import { CartItem } from '../../molecules/cart/CartItem.tsx';
-import { CartDrawerHeader } from '../../molecules/cart/CartDrawerHeader.tsx';
-import { CartDrawerFooter } from '../../molecules/cart/CartDrawerFooter.tsx';
-import { CartDrawerEmpty } from '../../molecules/cart/CartDrawerEmpty.tsx';
-import { CartDrawerLoginRequired } from '../../molecules/cart/CartDrawerLoginRequired.tsx';
+import { CartItem } from '../../../molecules/cart/CartItem.tsx';
+import { CartDrawerHeader } from './CartDrawerHeader.tsx';
+import { CartDrawerFooter } from './CartDrawerFooter.tsx';
+import { CartDrawerEmpty } from './CartDrawerEmpty.tsx';
+import { CartDrawerLoginRequired } from './CartDrawerLoginRequired.tsx';
 
 // Interface para os dados do item (sem handlers)
 export interface CartDrawerItemData {

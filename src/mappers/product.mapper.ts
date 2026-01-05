@@ -1,5 +1,5 @@
 import { Product } from '../modules/products/product.entity.ts';
-import { ProductCardProps } from '../components/molecules/product/ProductCard.tsx';
+import { ProductCardProps } from '../components/features/products/components/ProductCard.tsx';
 import { formatCurrency } from '../utils/formatCurrency.ts';
 
 export const productToCardProps = (product: Product): ProductCardProps => ({

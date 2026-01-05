@@ -1,5 +1,5 @@
 // src/components/molecules/CartEmptyState.tsx
-import { Icon } from '../atoms/Icon.tsx';
+import { Icon } from '../../../atoms/Icon.tsx';
 
 interface CartEmptyStateProps {
   isAuthenticated: boolean;

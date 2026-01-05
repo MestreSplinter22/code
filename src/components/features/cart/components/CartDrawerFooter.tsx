@@ -1,6 +1,6 @@
 // src/components/molecules/cart/CartDrawerFooter.tsx
-import { Button } from '../../atoms/Button.tsx';
-import { formatCurrency } from '../../../utils/formatCurrency.ts';
+import { Button } from '../../../atoms/Button.tsx';
+import { formatCurrency } from '../../../../utils/formatCurrency.ts';
 
 interface CartDrawerFooterProps {
   total: number;

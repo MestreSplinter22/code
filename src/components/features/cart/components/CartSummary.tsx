@@ -1,5 +1,5 @@
-import { Button } from '../../atoms/Button.tsx';
-import { formatCurrency } from '../../../utils/formatCurrency.ts';
+import { Button } from '../../../atoms/Button.tsx';
+import { formatCurrency } from '../../../../utils/formatCurrency.ts';
 
 interface CartSummaryProps {
   total: number;

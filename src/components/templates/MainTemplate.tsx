@@ -1,7 +1,7 @@
 import { PropsWithChildren } from "hono/jsx";
 import { Layout } from "./Layout.tsx";
 import { Navbar } from "../organisms/common/Navbar.tsx";
-import { CartDrawer } from "../organisms/cart/CartDrawer.tsx";
+import { CartDrawer } from "../features/cart/components/CartDrawer.tsx";
 
 interface MainTemplateProps extends PropsWithChildren {
   pageTitle: string;

@@ -1,4 +1,4 @@
-import { Button } from '../../atoms/Button.tsx';
+import { Button } from '../../../atoms/Button.tsx';
 
 interface UserNavActionsProps {
   isAuthenticated: boolean;

@@ -1,5 +1,5 @@
-import { Icon } from '../../atoms/Icon.tsx';
-import { ProductAction } from './ProductAction.tsx';
+import { Icon } from '../../../atoms/Icon.tsx';
+import { Button } from '../../../atoms/Button.tsx';
 
 export interface ProductCardProps {
   id: string;
@@ -51,7 +51,18 @@ export const ProductCard = ({ title, formattedPrice, formattedOriginalPrice, ima
       </div>
 
       {/* Botão de Ação */}
-      <ProductAction isSoldOut={isSoldOut} />
+      <Button
+        variant={isSoldOut ? 'ghost' : 'outline'}
+        fullWidth
+        disabled={isSoldOut}
+      >
+        {isSoldOut ? 'Esgotado' : (
+          <>
+            <Icon name="cart" />
+            Comprar agora
+          </>
+        )}
+      </Button>
 
       {/* Info Pix (conforme PDF) */}
       {!isSoldOut && <div className="mt-2 text-center text-[10px] text-zinc-500">À vista no Pix</div>}

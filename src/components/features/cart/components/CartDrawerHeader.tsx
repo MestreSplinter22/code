@@ -1,5 +1,5 @@
 // src/components/molecules/cart/CartDrawerHeader.tsx
-import { Icon } from '../../atoms/Icon.tsx';
+import { Icon } from '../../../atoms/Icon.tsx';
 
 interface CartDrawerHeaderProps {
   itemCount: number;

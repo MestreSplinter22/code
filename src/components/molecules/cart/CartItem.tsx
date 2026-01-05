@@ -6,9 +6,10 @@ export interface CartItemProps {
   imageUrl: string;
   title: string;
   price: number;
+  removeActionUrl?: string;
 }
 
-export const CartItem = ({ id, imageUrl, title, price }: CartItemProps) => {
+export const CartItem = ({ id, imageUrl, title, price, removeActionUrl }: CartItemProps) => {
   return (
     <div className="flex gap-4 p-3 bg-zinc-950/50 rounded-lg border border-zinc-800 animate-fade-in">
        {/* Placeholder de imagem ou ícone baseado na categoria */}
@@ -25,7 +26,7 @@ export const CartItem = ({ id, imageUrl, title, price }: CartItemProps) => {
              {formatCurrency(price)}
            </span>
            
-           <form method="POST" action="/cart/remove">
+           <form method="POST" action={removeActionUrl}>
              <input type="hidden" name="id" value={id} />
              <button 
                type="submit"
