@@ -17,7 +17,7 @@ export const MainTemplate = ({
 }: MainTemplateProps) => {
   return (
     <Layout title={pageTitle} isAuthenticated={isAuthenticated}>
-      <Navbar isAuthenticated={isAuthenticated} />
+      <Navbar isAuthenticated={isAuthenticated} onToggleCart="toggleCart()" />
       
       {/* AQUI ESTÁ A ESTRUTURA (GRID/SPACING) QUE SAIU DA PAGE */}
       <div className="max-w-7xl mx-auto px-4 py-12">

@@ -10,9 +10,10 @@ import { CartDrawerLoginRequired } from '../molecules/cart/CartDrawerLoginRequir
 interface CartDrawerProps {
   isAuthenticated: boolean;
   items?: Product[];
+  onClose?: string;
 }
 
-export const CartDrawer = ({ isAuthenticated, items = [] }: CartDrawerProps) => {
+export const CartDrawer = ({ isAuthenticated, items = [], onClose }: CartDrawerProps) => {
   const total = calculateCartTotal(items);
   const hasItems = items.length > 0;
 
@@ -21,7 +22,7 @@ export const CartDrawer = ({ isAuthenticated, items = [] }: CartDrawerProps) => 
       {/* Overlay */}
       <div 
         id="cart-overlay" 
-        onclick="toggleCart()" 
+        onclick={onClose} 
         className="fixed inset-0 bg-black/80 z-[60] hidden transition-opacity duration-300 opacity-0 backdrop-blur-sm"
       />
 
@@ -31,7 +32,7 @@ export const CartDrawer = ({ isAuthenticated, items = [] }: CartDrawerProps) => 
         className="fixed top-0 right-0 h-full w-full max-w-md bg-zinc-900 border-l border-zinc-800 shadow-2xl z-[70] transform translate-x-full transition-transform duration-300 ease-in-out flex flex-col"
       >
         
-        <CartDrawerHeader itemCount={items.length} />
+        <CartDrawerHeader itemCount={items.length} onClose={onClose} />
 
         <div className="flex-1 overflow-y-auto p-6 space-y-4">
           {!isAuthenticated ? (

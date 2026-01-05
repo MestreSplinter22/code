@@ -14,7 +14,7 @@ interface HomePageProps {
 export const HomePage = ({ products, isAuthenticated }: HomePageProps) => {
   return (
     <Layout title="Adsly - Agência de Contingência" isAuthenticated={isAuthenticated}>
-      <Navbar isAuthenticated={isAuthenticated} />
+      <Navbar isAuthenticated={isAuthenticated} onToggleCart="toggleCart()" />
       
       <HeroSection />
 

@@ -26,7 +26,7 @@ export const Layout = ({ children, title, isAuthenticated = false }: LayoutProps
         {children}
 
         {/* Componente visual do Carrinho */}
-        <CartDrawer isAuthenticated={isAuthenticated} items={[]} />
+        <CartDrawer isAuthenticated={isAuthenticated} items={[]} onClose="toggleCart()" />
         
         {/* Injeção do Script de comportamento.
             Posicionado antes do fechamento do body para garantir 

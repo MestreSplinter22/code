@@ -3,9 +3,10 @@ import { Button } from '../atoms/Button.tsx';
 
 interface NavbarProps {
   isAuthenticated?: boolean;
+  onToggleCart?: string;
 }
 
-export const Navbar = ({ isAuthenticated = false }: NavbarProps) => (
+export const Navbar = ({ isAuthenticated = false, onToggleCart }: NavbarProps) => (
   <nav className="border-b border-zinc-800 bg-black/95 backdrop-blur-sm sticky top-0 z-50">
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div className="flex items-center justify-between h-16">
@@ -37,7 +38,7 @@ export const Navbar = ({ isAuthenticated = false }: NavbarProps) => (
           {/* --- CORREÇÃO AQUI --- */}
           {/* Adicionado onclick="toggleCart()" */}
           <button
-            onclick="toggleCart()"
+            onclick={onToggleCart}
             className="relative text-gray-300 hover:text-yellow-500 transition group"
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
