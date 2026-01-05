@@ -14,7 +14,7 @@ export const Navbar = ({ isAuthenticated = false }: NavbarProps) => (
           <span className="text-white">ADSLY</span><span className="text-yellow-500">.STORE</span>
         </a>
 
-        {/* Search Bar (Oculta em Mobile) */}
+        {/* Search Bar */}
         <div className="hidden md:block flex-1 max-w-md mx-8">
           <div className="relative group">
             <input 
@@ -33,8 +33,12 @@ export const Navbar = ({ isAuthenticated = false }: NavbarProps) => (
         {/* Ações */}
         <div className="flex items-center gap-6">
             
-            {/* Botão Carrinho */}
-            <button className="relative text-gray-300 hover:text-yellow-500 transition group">
+            {/* --- CORREÇÃO AQUI --- */}
+            {/* Adicionado onclick="toggleCart()" */}
+            <button 
+               onclick="toggleCart()" 
+               className="relative text-gray-300 hover:text-yellow-500 transition group"
+            >
                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
                </svg>
@@ -42,8 +46,9 @@ export const Navbar = ({ isAuthenticated = false }: NavbarProps) => (
                  1
                </span>
             </button>
+            {/* --------------------- */}
 
-            {/* Lógica de Autenticação Condicional */}
+            {/* Lógica de Autenticação */}
             {isAuthenticated ? (
               <div className="flex items-center gap-4">
                   <a href="/dashboard/my-orders" className="text-sm font-medium text-gray-300 hover:text-yellow-500 transition">

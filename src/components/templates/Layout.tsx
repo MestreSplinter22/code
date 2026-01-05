@@ -1,8 +1,12 @@
 // src/components/templates/Layout.tsx
 import { html } from 'hono/html';
-import { CartDrawer } from '../organisms/CartDrawer.tsx'; // Importe o Drawer
+import { CartDrawer } from '../organisms/CartDrawer.tsx';
 
-export const Layout = (props: { children: any; title: string }) => {
+// Adicionada a prop opcional isAuthenticated
+export const Layout = (props: { children: any; title: string; isAuthenticated?: boolean }) => {
+  // Define false como padrão se não for passado
+  const isAuthenticated = props.isAuthenticated ?? false;
+
   return html`
     <!DOCTYPE html>
     <html lang="pt-BR" class="dark">
@@ -14,14 +18,13 @@ export const Layout = (props: { children: any; title: string }) => {
         <style>
           .text-gold { color: #FFC107; }
           .bg-card-gradient { background: linear-gradient(180deg, #1a1a1a 0%, #0a0a0a 100%); }
-          /* Esconde barra de rolagem quando o modal está aberto, se necessário via JS */
           body.modal-open { overflow: hidden; }
         </style>
       </head>
       <body class="bg-black text-white font-sans antialiased relative">
         ${props.children}
         
-        ${CartDrawer()}
+        ${CartDrawer(isAuthenticated)}
       </body>
     </html>
   `;
