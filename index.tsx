@@ -5,8 +5,6 @@ import { ProductCard } from './src/components/molecules/ProductCard.tsx';
 import { ProductService } from './src/modules/products/product.service.ts';
 import { formatCurrency } from './src/utils/formatCurrency.ts';
 import { CartDrawer } from './src/components/organisms/CartDrawer.tsx';
-import { CartDrawerScript } from './src/components/templates/scripts/CartDrawerScript.tsx';
-
 import { ProductRepository } from './src/modules/products/product.repository.ts';
 
 const app = new Hono();
@@ -15,18 +13,31 @@ const productService = new ProductService(productRepo);
 
 app.get('/', async (c) => {
   const products = await productService.getAllProducts();
+  const drawerId = "main-cart-drawer";
+  const toggleFn = `toggle_${drawerId}()`;
 
   return c.html(
     <Layout 
       title="Adsly - Agência de Contingência"
       extra={
-        <>
-          <CartDrawer isAuthenticated={false} items={[]} total={0} onClose="toggleCart()" />
-          <CartDrawerScript />
-        </>
+        <CartDrawer 
+          id={drawerId}
+          isAuthenticated={false} 
+          items={[]} 
+          total={0} 
+          onClose={toggleFn} 
+        />
       }
     >
-      <Navbar />
+      <Navbar 
+        onToggleCart={toggleFn} 
+        routes={{
+          home: "/",
+          login: "/auth/login",
+          dashboard: "/dashboard/my-orders",
+          logout: "/auth/logout"
+        }}
+      />
       
       {/* Hero Section (Vídeo e Título conforme PDF pág 1) */}
       <section class="bg-zinc-900/30 py-12 border-b border-zinc-800">

@@ -3,7 +3,6 @@ import { PropsWithChildren } from "hono/jsx";
 import { Layout } from "./Layout.tsx"; // O seu Layout base (html/head/body)
 import { Navbar } from "../organisms/Navbar.tsx";
 import { CartDrawer } from "../organisms/CartDrawer.tsx";
-import { CartDrawerScript } from "./scripts/CartDrawerScript.tsx";
 
 interface MainTemplateProps extends PropsWithChildren {
   pageTitle: string; // Título da aba do navegador
@@ -17,17 +16,32 @@ export const MainTemplate = ({
   headerTitle, 
   isAuthenticated 
 }: MainTemplateProps) => {
+  const drawerId = "app-cart-drawer";
+  const toggleFn = `toggle_${drawerId}()`;
+
   return (
     <Layout 
       title={pageTitle}
       extra={
-        <>
-          <CartDrawer isAuthenticated={isAuthenticated} items={[]} total={0} onClose="toggleCart()" />
-          <CartDrawerScript />
-        </>
+          <CartDrawer 
+            id={drawerId}
+            isAuthenticated={isAuthenticated} 
+            items={[]} 
+            total={0} 
+            onClose={toggleFn} 
+          />
       }
     >
-      <Navbar isAuthenticated={isAuthenticated} onToggleCart="toggleCart()" />
+      <Navbar 
+        isAuthenticated={isAuthenticated} 
+        onToggleCart={toggleFn}
+        routes={{
+          home: "/",
+          login: "/auth/login",
+          dashboard: "/dashboard/my-orders",
+          logout: "/auth/logout"
+        }}
+      />
       
       {/* AQUI ESTÁ A ESTRUTURA (GRID/SPACING) QUE SAIU DA PAGE */}
       <div className="max-w-7xl mx-auto px-4 py-12">

@@ -7,7 +7,6 @@ import { ProductCard } from '../molecules/ProductCard.tsx';
 import { Product } from '../../modules/products/product.entity.ts';
 import { formatCurrency } from '../../utils/formatCurrency.ts';
 import { CartDrawer } from '../organisms/CartDrawer.tsx';
-import { CartDrawerScript } from '../templates/scripts/CartDrawerScript.tsx';
 
 interface HomePageProps {
   products: Product[];
@@ -15,17 +14,32 @@ interface HomePageProps {
 }
 
 export const HomePage = ({ products, isAuthenticated }: HomePageProps) => {
+  const drawerId = "home-cart-drawer";
+  const toggleFn = `toggle_${drawerId}()`;
+
   return (
     <Layout 
       title="Adsly - Agência de Contingência"
       extra={
-        <>
-          <CartDrawer isAuthenticated={isAuthenticated} items={[]} total={0} onClose="toggleCart()" />
-          <CartDrawerScript />
-        </>
+          <CartDrawer 
+            id={drawerId}
+            isAuthenticated={isAuthenticated} 
+            items={[]} 
+            total={0} 
+            onClose={toggleFn} 
+          />
       }
     >
-      <Navbar isAuthenticated={isAuthenticated} onToggleCart="toggleCart()" />
+      <Navbar 
+        isAuthenticated={isAuthenticated} 
+        onToggleCart={toggleFn}
+        routes={{
+          home: "/",
+          login: "/auth/login",
+          dashboard: "/dashboard/my-orders",
+          logout: "/auth/logout"
+        }}
+      />
       
       <HeroSection />
 

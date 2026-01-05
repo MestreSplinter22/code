@@ -19,10 +19,10 @@ export const Navbar = ({
   routes = {}
 }: NavbarProps) => {
   const {
-    home = "/",
-    login = "/auth/login",
-    dashboard = "/dashboard/my-orders",
-    logout = "/auth/logout"
+    home = "#",
+    login = "#",
+    dashboard = "#",
+    logout = "#"
   } = routes;
 
   return (

@@ -1,8 +1,12 @@
-import { Button } from '../atoms/Button.tsx';
 import { Icon } from '../atoms/Icon.tsx';
+import { ProductAction } from './ProductAction.tsx';
+// Wait, I am editing the file content. I should check the current state of ProductCard in previous `read_file`.
+// Previous read_file showed `formattedPrice` being used, and NO formatCurrency import. 
+// AND it used Button and Icon.
 
-export interface ProductCardProps {
-  id: string;
+// Let's rewrite the imports properly based on what I see in previous read_file output.
+
+export interface ProductCardProps {  id: string;
   title: string;
   formattedPrice: string;
   formattedOriginalPrice?: string;
@@ -51,18 +55,7 @@ export const ProductCard = ({ title, formattedPrice, formattedOriginalPrice, ima
       </div>
 
       {/* Botão de Ação */}
-      <Button
-        variant={isSoldOut ? 'ghost' : 'outline'}
-        fullWidth
-        disabled={isSoldOut}
-      >
-        {isSoldOut ? 'Esgotado' : (
-          <>
-            <Icon name="cart" />
-            Comprar agora
-          </>
-        )}
-      </Button>
+      <ProductAction isSoldOut={isSoldOut} />
 
       {/* Info Pix (conforme PDF) */}
       {!isSoldOut && <div class="mt-2 text-center text-[10px] text-zinc-500">À vista no Pix</div>}
