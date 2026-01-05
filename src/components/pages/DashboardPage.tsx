@@ -3,24 +3,12 @@ import { MainTemplate } from '../templates/MainTemplate.tsx';
 import { OrderList } from '../organisms/OrderList.tsx';
 import { Order } from '../../modules/orders/order.entity.ts';
 import { OrderCardProps } from '../molecules/OrderCard.tsx';
+import { orderToOrderCardProps } from '../../mappers/order.mapper.ts';
 
 interface DashboardPageProps {
   orders: Order[];
   isAuthenticated: boolean;
 }
-
-const orderToOrderCardProps = (order: Order): OrderCardProps => ({
-  id: order.id,
-  status: order.status,
-  purchaseDate: order.purchaseDate,
-  price: order.price,
-  productName: order.productName,
-  credentials: {
-    accessLogin: order.credentials.accessLogin,
-    accessPass: order.credentials.accessPass,
-    backupCode: order.credentials.backupCode,
-  }
-});
 
 export const DashboardPage = ({ orders, isAuthenticated }: DashboardPageProps) => {
   const orderCardProps: OrderCardProps[] = orders.map(orderToOrderCardProps);

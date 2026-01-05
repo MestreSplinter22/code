@@ -2,6 +2,8 @@
 import { PropsWithChildren } from "hono/jsx";
 import { Layout } from "./Layout.tsx"; // O seu Layout base (html/head/body)
 import { Navbar } from "../organisms/Navbar.tsx";
+import { CartDrawer } from "../organisms/CartDrawer.tsx";
+import { CartDrawerScript } from "./scripts/CartDrawerScript.tsx";
 
 interface MainTemplateProps extends PropsWithChildren {
   pageTitle: string; // Título da aba do navegador
@@ -16,7 +18,15 @@ export const MainTemplate = ({
   isAuthenticated 
 }: MainTemplateProps) => {
   return (
-    <Layout title={pageTitle} isAuthenticated={isAuthenticated}>
+    <Layout 
+      title={pageTitle}
+      extra={
+        <>
+          <CartDrawer isAuthenticated={isAuthenticated} items={[]} total={0} onClose="toggleCart()" />
+          <CartDrawerScript />
+        </>
+      }
+    >
       <Navbar isAuthenticated={isAuthenticated} onToggleCart="toggleCart()" />
       
       {/* AQUI ESTÁ A ESTRUTURA (GRID/SPACING) QUE SAIU DA PAGE */}

@@ -4,9 +4,11 @@ import { FormField } from '../../molecules/FormField.tsx';
 interface LoginFormProps {
   error?: string;
   demoCredentials?: { email: string; pass: string };
+  action: string;
+  method?: string;
 }
 
-export const LoginForm = ({ error, demoCredentials }: LoginFormProps) => {
+export const LoginForm = ({ error, demoCredentials, action, method = "POST" }: LoginFormProps) => {
   return (
     <div className="w-full max-w-md bg-zinc-900 border border-zinc-800 rounded-2xl p-8 shadow-2xl relative overflow-hidden">
       {/* Detalhe Decorativo (pode virar um átomo se usado em outros lugares) */}
@@ -27,7 +29,7 @@ export const LoginForm = ({ error, demoCredentials }: LoginFormProps) => {
         </div>
       )}
 
-      <form method="POST" action="/auth/login" className="space-y-5">
+      <form method={method as any} action={action} className="space-y-5">
         <FormField 
           label="E-mail"
           name="email"

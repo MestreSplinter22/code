@@ -1,18 +1,17 @@
 import { Button } from '../atoms/Button.tsx';
 import { Icon } from '../atoms/Icon.tsx';
-import { formatCurrency } from '../../utils/formatCurrency.ts';
 
 export interface ProductCardProps {
   id: string;
   title: string;
-  price: number;
-  originalPrice?: number;
+  formattedPrice: string;
+  formattedOriginalPrice?: string;
   imageUrl: string;
   category: string;
   isSoldOut: boolean;
 }
 
-export const ProductCard = ({ title, price, originalPrice, imageUrl, category, isSoldOut }: ProductCardProps) => {
+export const ProductCard = ({ title, formattedPrice, formattedOriginalPrice, imageUrl, category, isSoldOut }: ProductCardProps) => {
   return (
     <div class="relative group rounded-xl border border-zinc-800 bg-card-gradient p-4 transition-all hover:border-yellow-500/50 hover:shadow-lg hover:shadow-yellow-500/10">
 
@@ -41,13 +40,13 @@ export const ProductCard = ({ title, price, originalPrice, imageUrl, category, i
 
       {/* Preço */}
       <div class="mb-4">
-        {originalPrice && (
+        {formattedOriginalPrice && (
           <span class="block text-xs text-gray-500 line-through">
-            {formatCurrency(originalPrice)}
+            {formattedOriginalPrice}
           </span>
         )}
         <span class="text-xl font-bold text-yellow-500">
-          {formatCurrency(price)}
+          {formattedPrice}
         </span>
       </div>
 

@@ -9,7 +9,7 @@ interface AuthTemplateProps extends PropsWithChildren {
 
 export const AuthTemplate = ({ children, title }: AuthTemplateProps) => {
   return (
-    <Layout title={title} isAuthenticated={false}>
+    <Layout title={title}>
       <Navbar isAuthenticated={false} />
       
       {/* ESTRUTURA DE CENTRALIZAÇÃO */}

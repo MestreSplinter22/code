@@ -8,7 +8,7 @@ interface LoginPageProps {
 export const LoginPage = ({ error }: LoginPageProps) => {
   return (
     <AuthTemplate title="Entrar - Adsly">
-        <LoginForm error={error} />
+        <LoginForm error={error} action="/auth/login" />
     </AuthTemplate>
   );
 };

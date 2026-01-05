@@ -5,6 +5,9 @@ import { CtaBanner } from '../molecules/CtaBanner.tsx';
 import { Footer } from '../organisms/Footer.tsx';
 import { ProductCard } from '../molecules/ProductCard.tsx';
 import { Product } from '../../modules/products/product.entity.ts';
+import { formatCurrency } from '../../utils/formatCurrency.ts';
+import { CartDrawer } from '../organisms/CartDrawer.tsx';
+import { CartDrawerScript } from '../templates/scripts/CartDrawerScript.tsx';
 
 interface HomePageProps {
   products: Product[];
@@ -13,7 +16,15 @@ interface HomePageProps {
 
 export const HomePage = ({ products, isAuthenticated }: HomePageProps) => {
   return (
-    <Layout title="Adsly - Agência de Contingência" isAuthenticated={isAuthenticated}>
+    <Layout 
+      title="Adsly - Agência de Contingência"
+      extra={
+        <>
+          <CartDrawer isAuthenticated={isAuthenticated} items={[]} total={0} onClose="toggleCart()" />
+          <CartDrawerScript />
+        </>
+      }
+    >
       <Navbar isAuthenticated={isAuthenticated} onToggleCart="toggleCart()" />
       
       <HeroSection />
@@ -30,8 +41,8 @@ export const HomePage = ({ products, isAuthenticated }: HomePageProps) => {
               // CORREÇÃO: Passando props individuais ao invés do objeto 'product'
               id={product.id}
               title={product.title}
-              price={product.price}
-              originalPrice={product.originalPrice}
+              formattedPrice={formatCurrency(product.price)}
+              formattedOriginalPrice={product.originalPrice ? formatCurrency(product.originalPrice) : undefined}
               imageUrl={product.imageUrl}
               category={product.category}
               isSoldOut={product.status === 'sold_out'} // Mapeamento de lógica de UI

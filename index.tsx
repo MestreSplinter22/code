@@ -1,17 +1,31 @@
 import { Hono } from 'hono';
-import { Layout } from './components/templates/Layout';
-import { Navbar } from './components/organisms/Navbar';
-import { ProductCard } from './components/molecules/ProductCard';
-import { ProductService } from './modules/products/product.service';
+import { Layout } from './src/components/templates/Layout.tsx';
+import { Navbar } from './src/components/organisms/Navbar.tsx';
+import { ProductCard } from './src/components/molecules/ProductCard.tsx';
+import { ProductService } from './src/modules/products/product.service.ts';
+import { formatCurrency } from './src/utils/formatCurrency.ts';
+import { CartDrawer } from './src/components/organisms/CartDrawer.tsx';
+import { CartDrawerScript } from './src/components/templates/scripts/CartDrawerScript.tsx';
+
+import { ProductRepository } from './src/modules/products/product.repository.ts';
 
 const app = new Hono();
-const productService = new ProductService();
+const productRepo = new ProductRepository();
+const productService = new ProductService(productRepo);
 
 app.get('/', async (c) => {
   const products = await productService.getAllProducts();
 
   return c.html(
-    <Layout title="Adsly - Agência de Contingência">
+    <Layout 
+      title="Adsly - Agência de Contingência"
+      extra={
+        <>
+          <CartDrawer isAuthenticated={false} items={[]} total={0} onClose="toggleCart()" />
+          <CartDrawerScript />
+        </>
+      }
+    >
       <Navbar />
       
       {/* Hero Section (Vídeo e Título conforme PDF pág 1) */}
@@ -39,7 +53,15 @@ app.get('/', async (c) => {
 
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {products.map((product) => (
-            <ProductCard product={product} />
+            <ProductCard 
+              id={product.id}
+              title={product.title}
+              formattedPrice={formatCurrency(product.price)}
+              formattedOriginalPrice={product.originalPrice ? formatCurrency(product.originalPrice) : undefined}
+              imageUrl={product.imageUrl}
+              category={product.category}
+              isSoldOut={product.status === 'sold_out'}
+            />
           ))}
         </div>
       

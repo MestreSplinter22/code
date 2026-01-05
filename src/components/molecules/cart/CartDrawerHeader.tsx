@@ -12,7 +12,7 @@ export const CartDrawerHeader = ({ itemCount, onClose }: CartDrawerHeaderProps) 
       <Icon name="cart" className="w-6 h-6 text-yellow-500" />
       Seu Carrinho <span className="text-sm font-normal text-zinc-500">({itemCount})</span>
     </h2>
-    <button onClick={onClose} className="text-gray-400 hover:text-white transition-colors p-1 rounded-md hover:bg-zinc-800">
+    <button onclick={onClose} className="text-gray-400 hover:text-white transition-colors p-1 rounded-md hover:bg-zinc-800">
       <Icon name="close" className="w-6 h-6" />
     </button>
   </div>

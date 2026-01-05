@@ -1,13 +1,11 @@
 import { PropsWithChildren } from "hono/jsx";
-import { CartDrawer } from "../organisms/CartDrawer.tsx";
-import { CartDrawerScript } from "./scripts/CartDrawerScript.tsx"; 
 
 interface LayoutProps extends PropsWithChildren {
   title: string;
-  isAuthenticated?: boolean;
+  extra?: any; // Slot para modais, scripts, drawers, etc.
 }
 
-export const Layout = ({ children, title, isAuthenticated = false }: LayoutProps) => {
+export const Layout = ({ children, title, extra }: LayoutProps) => {
   return (
     <html lang="pt-BR" className="dark">
       <head>
@@ -25,14 +23,8 @@ export const Layout = ({ children, title, isAuthenticated = false }: LayoutProps
         
         {children}
 
-        {/* Componente visual do Carrinho */}
-        <CartDrawer isAuthenticated={isAuthenticated} items={[]} onClose="toggleCart()" />
-        
-        {/* Injeção do Script de comportamento.
-            Posicionado antes do fechamento do body para garantir 
-            que o DOM já esteja disponível para manipulação.
-        */}
-        <CartDrawerScript />
+        {/* Slot para elementos fora do fluxo normal (Drawers, Modais, Scripts) */}
+        {extra}
         
       </body>
     </html>

@@ -1,20 +1,32 @@
 import { CartItem } from '../molecules/CartItem.tsx';
-import { Product } from '../../modules/products/product.entity.ts';
-import { calculateCartTotal } from '../../utils/cart.utils.ts';
-
 import { CartDrawerHeader } from '../molecules/cart/CartDrawerHeader.tsx';
 import { CartDrawerFooter } from '../molecules/cart/CartDrawerFooter.tsx';
 import { CartDrawerEmpty } from '../molecules/cart/CartDrawerEmpty.tsx';
 import { CartDrawerLoginRequired } from '../molecules/cart/CartDrawerLoginRequired.tsx';
 
-interface CartDrawerProps {
-  isAuthenticated: boolean;
-  items?: Product[];
-  onClose?: string;
+// Interface para os dados do item (sem handlers)
+export interface CartDrawerItemData {
+  id: string;
+  title: string;
+  price: number;
+  imageUrl: string;
 }
 
-export const CartDrawer = ({ isAuthenticated, items = [], onClose }: CartDrawerProps) => {
-  const total = calculateCartTotal(items);
+interface CartDrawerProps {
+  isAuthenticated: boolean;
+  items?: CartDrawerItemData[];
+  total: number;
+  onClose?: string;
+  onRemoveItem?: (id: string) => void;
+}
+
+export const CartDrawer = ({ 
+  isAuthenticated, 
+  items = [], 
+  total,
+  onClose,
+  onRemoveItem = (id) => console.log('Remove item:', id)
+}: CartDrawerProps) => {
   const hasItems = items.length > 0;
 
   return (
@@ -43,12 +55,11 @@ export const CartDrawer = ({ isAuthenticated, items = [], onClose }: CartDrawerP
             items.map((item, index) => (
               <CartItem 
                 key={`${item.id}-${index}`} 
-                // CORREÇÃO: Mapeamento direto das propriedades primitivas
                 id={item.id}
                 title={item.title}
                 price={item.price}
                 imageUrl={item.imageUrl}
-                onRemove={(id) => console.log('Remover item (client-side needed)', id)} 
+                onRemove={onRemoveItem} 
               />
             ))
           )}
