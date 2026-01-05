@@ -1,10 +1,18 @@
-import { Product } from '../../modules/products/product.entity.ts';
 import { Button } from '../atoms/Button.tsx';
 import { Icon } from '../atoms/Icon.tsx';
+import { formatCurrency } from '../../utils/formatCurrency.ts';
 
-export const ProductCard = ({ product }: { product: Product }) => {
-  const isSoldOut = product.status === 'sold_out';
+export interface ProductCardProps {
+  id: string;
+  title: string;
+  price: number;
+  originalPrice?: number;
+  imageUrl: string;
+  category: string;
+  isSoldOut: boolean;
+}
 
+export const ProductCard = ({ title, price, originalPrice, imageUrl, category, isSoldOut }: ProductCardProps) => {
   return (
     <div class="relative group rounded-xl border border-zinc-800 bg-card-gradient p-4 transition-all hover:border-yellow-500/50 hover:shadow-lg hover:shadow-yellow-500/10">
 
@@ -16,30 +24,30 @@ export const ProductCard = ({ product }: { product: Product }) => {
           </span>
         ) : (
           <span class="bg-zinc-800 text-zinc-400 text-xs px-2 py-1 rounded border border-zinc-700">
-            {product.category}
+            {category}
           </span>
         )}
       </div>
 
       {/* Ícone/Imagem */}
       <div class="h-32 flex items-center justify-center mb-4 bg-zinc-900/50 rounded-lg overflow-hidden">
-        <img src={product.imageUrl} alt={product.title} class="w-16 h-16 object-contain opacity-80" />
+        <img src={imageUrl} alt={title} class="w-16 h-16 object-contain opacity-80" />
       </div>
 
       {/* Título */}
       <h3 class="text-sm font-bold text-gray-100 h-12 leading-snug mb-2 overflow-hidden">
-        {product.title}
+        {title}
       </h3>
 
       {/* Preço */}
       <div class="mb-4">
-        {product.originalPrice && (
+        {originalPrice && (
           <span class="block text-xs text-gray-500 line-through">
-            R$ {product.originalPrice.toFixed(2).replace('.', ',')}
+            {formatCurrency(originalPrice)}
           </span>
         )}
         <span class="text-xl font-bold text-yellow-500">
-          R$ {product.price.toFixed(2).replace('.', ',')}
+          {formatCurrency(price)}
         </span>
       </div>
 
@@ -51,7 +59,7 @@ export const ProductCard = ({ product }: { product: Product }) => {
       >
         {isSoldOut ? 'Esgotado' : (
           <>
-            <Icon name="cart" /> {/* Se tiver criado o átomo de Icon */}
+            <Icon name="cart" />
             Comprar agora
           </>
         )}

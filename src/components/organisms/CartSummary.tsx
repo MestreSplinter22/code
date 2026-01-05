@@ -1,5 +1,6 @@
 // src/components/organisms/CartSummary.tsx
 import { Button } from '../atoms/Button.tsx';
+import { formatCurrency } from '../../utils/formatCurrency.ts';
 
 interface CartSummaryProps {
   total: number;
@@ -9,7 +10,7 @@ interface CartSummaryProps {
 
 export const CartSummary = ({ total, isAuthenticated, hasItems }: CartSummaryProps) => {
   // Encapsulamento da formatação (Poderia ser um utilitário separado também)
-  const formattedTotal = `R$ ${total.toFixed(2).replace('.', ',')}`;
+  const formattedTotal = formatCurrency(total);
 
   return (
     <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-6 sticky top-24">

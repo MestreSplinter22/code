@@ -1,9 +1,8 @@
 // src/components/organisms/OrderList.tsx
-import { Order } from '../../modules/orders/order.entity.ts';
-import { OrderCard } from '../molecules/OrderCard.tsx';
+import { OrderCard, OrderCardProps } from '../molecules/OrderCard.tsx';
 
 interface OrderListProps {
-  orders: Order[];
+  orders: OrderCardProps[];
 }
 
 export const OrderList = ({ orders }: OrderListProps) => {
@@ -19,7 +18,7 @@ export const OrderList = ({ orders }: OrderListProps) => {
   return (
     <div className="grid gap-6">
       {orders.map((order) => (
-        <OrderCard key={order.id} order={order} />
+        <OrderCard key={order.id} {...order} />
       ))}
     </div>
   );

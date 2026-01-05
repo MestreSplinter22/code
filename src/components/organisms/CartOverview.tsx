@@ -1,16 +1,16 @@
 // src/components/organisms/CartOverview.tsx
-import { CartItem } from '../molecules/CartItem.tsx';
-import { CartSummary } from './CartSummary.tsx'; // (Aquele que criamos no passo anterior)
-import { CartEmptyState } from '../molecules/CartEmptyState.tsx'; // (Aquele que criamos no passo anterior)
-import { Product } from '../../modules/products/product.entity.ts';
+import { CartItem, CartItemProps } from '../molecules/CartItem.tsx';
+import { CartSummary } from './CartSummary.tsx';
+import { CartEmptyState } from '../molecules/CartEmptyState.tsx';
 
 interface CartOverviewProps {
-  items: Product[];
+  items: CartItemProps[];
+  onRemoveItem: (id: string) => void;
   total: number;
   isAuthenticated: boolean;
 }
 
-export const CartOverview = ({ items, total, isAuthenticated }: CartOverviewProps) => {
+export const CartOverview = ({ items, onRemoveItem, total, isAuthenticated }: CartOverviewProps) => {
   const hasItems = items && items.length > 0;
 
   return (
@@ -18,11 +18,11 @@ export const CartOverview = ({ items, total, isAuthenticated }: CartOverviewProp
       {/* Coluna da Esquerda: Lista ou Vazio */}
       <div className="lg:col-span-2 space-y-4">
         {isAuthenticated && hasItems ? (
-          items.map((item, index) => (
+          items.map((item) => (
             <CartItem 
-              key={`${item.id}-${index}`} 
-              product={item} 
-              onRemove={(id) => console.log('Remover', id)} 
+              key={item.id}
+              {...item}
+              onRemove={onRemoveItem} 
             />
           ))
         ) : (

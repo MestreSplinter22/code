@@ -14,7 +14,6 @@ interface HomePageProps {
 export const HomePage = ({ products, isAuthenticated }: HomePageProps) => {
   return (
     <Layout title="Adsly - Agência de Contingência" isAuthenticated={isAuthenticated}>
-      {/* Navbar recebe o estado de autenticação para decidir o que mostrar */}
       <Navbar isAuthenticated={isAuthenticated} />
       
       <HeroSection />
@@ -26,7 +25,17 @@ export const HomePage = ({ products, isAuthenticated }: HomePageProps) => {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {products.map((product) => (
-            <ProductCard key={product.id} product={product} />
+            <ProductCard 
+              key={product.id} 
+              // CORREÇÃO: Passando props individuais ao invés do objeto 'product'
+              id={product.id}
+              title={product.title}
+              price={product.price}
+              originalPrice={product.originalPrice}
+              imageUrl={product.imageUrl}
+              category={product.category}
+              isSoldOut={product.status === 'sold_out'} // Mapeamento de lógica de UI
+            />
           ))}
         </div>
       

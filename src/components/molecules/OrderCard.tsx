@@ -1,11 +1,22 @@
-import { Order } from '../../modules/orders/order.entity.ts';
+import { formatCurrency } from '../../utils/formatCurrency.ts';
 
-interface OrderCardProps {
-  order: Order;
+export interface CredentialsProps {
+  accessLogin: string;
+  accessPass: string;
+  backupCode?: string;
 }
 
-export const OrderCard = ({ order }: OrderCardProps) => {
-  const isApproved = order.status === 'approved';
+export interface OrderCardProps {
+  id: string;
+  status: 'approved' | 'pending';
+  purchaseDate: string;
+  price: number;
+  productName: string;
+  credentials: CredentialsProps;
+}
+
+export const OrderCard = ({ id, status, purchaseDate, price, productName, credentials }: OrderCardProps) => {
+  const isApproved = status === 'approved';
 
   return (
     <div className="bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden hover:border-zinc-700 transition">
@@ -19,15 +30,15 @@ export const OrderCard = ({ order }: OrderCardProps) => {
           }`}>
             {isApproved ? 'PAGAMENTO APROVADO' : 'PENDENTE'}
           </span>
-          <span className="text-zinc-400 text-sm">Pedido {order.id}</span>
-          <span className="text-zinc-500 text-sm">• {order.purchaseDate}</span>
+          <span className="text-zinc-400 text-sm">Pedido {id}</span>
+          <span className="text-zinc-500 text-sm">• {purchaseDate}</span>
         </div>
-        <div className="text-white font-bold">R$ {order.price.toFixed(2)}</div>
+        <div className="text-white font-bold">{formatCurrency(price)}</div>
       </div>
 
       {/* Detalhes e Credenciais */}
       <div className="p-6">
-        <h3 className="text-xl font-bold text-white mb-4">{order.productName}</h3>
+        <h3 className="text-xl font-bold text-white mb-4">{productName}</h3>
         
         <div className="bg-black/40 rounded-lg p-4 border border-zinc-800 relative">
           <div className="absolute -top-3 left-4 bg-zinc-800 text-zinc-300 text-[10px] px-2 py-0.5 rounded uppercase tracking-wider font-bold">
@@ -38,21 +49,21 @@ export const OrderCard = ({ order }: OrderCardProps) => {
             <div>
               <label className="block text-xs text-zinc-500 mb-1">Login / Usuário</label>
               <div className="bg-zinc-900 border border-zinc-700 rounded px-3 py-2 text-yellow-500 font-mono text-sm select-all">
-                {order.credentials.accessLogin}
+                {credentials.accessLogin}
               </div>
             </div>
             <div>
               <label className="block text-xs text-zinc-500 mb-1">Senha</label>
               <div className="bg-zinc-900 border border-zinc-700 rounded px-3 py-2 text-white font-mono text-sm select-all">
-                {order.credentials.accessPass}
+                {credentials.accessPass}
               </div>
             </div>
           </div>
 
-          {order.credentials.backupCode && (
+          {credentials.backupCode && (
             <div className="mt-3 pt-3 border-t border-zinc-800/50">
               <label className="block text-xs text-zinc-500 mb-1">Código de Backup / 2FA</label>
-              <span className="text-zinc-400 font-mono text-sm tracking-widest">{order.credentials.backupCode}</span>
+              <span className="text-zinc-400 font-mono text-sm tracking-widest">{credentials.backupCode}</span>
             </div>
           )}
         </div>
