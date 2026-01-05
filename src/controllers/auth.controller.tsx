@@ -1,18 +1,26 @@
 import { Hono } from 'hono';
-import { setCookie } from 'hono/cookie';
+import { setCookie, deleteCookie } from 'hono/cookie'; // 1. Importado deleteCookie
 import { Layout } from '../components/templates/Layout.tsx';
 import { Navbar } from '../components/organisms/Navbar.tsx';
-import { AuthService } from '../modules/auth/auth.service.ts'; // Certifique-se que o caminho está correto
+import { AuthService } from '../modules/auth/auth.service.ts';
 
-// Injetando o AuthService como dependência
 export const createAuthController = (authService: AuthService) => {
   const app = new Hono();
+
+  // 2. Rota: GET /auth/logout
+  // Remove o cookie e redireciona para a home
+  app.get('/logout', (c) => {
+    deleteCookie(c, 'auth_token');
+    return c.redirect('/');
+  });
 
   // Rota: GET /auth/login (Exibe o formulário)
   app.get('/login', (c) => {
     return c.html(
       <Layout title="Entrar - Adsly">
-        <Navbar />
+        {/* Passamos isAuthenticated={false} explicitamente */}
+        <Navbar isAuthenticated={false} />
+        
         <div class="min-h-[calc(100vh-64px)] flex items-center justify-center p-4">
           <div class="w-full max-w-md bg-zinc-900 border border-zinc-800 rounded-2xl p-8 shadow-2xl relative overflow-hidden">
             
@@ -20,7 +28,6 @@ export const createAuthController = (authService: AuthService) => {
 
             <h2 class="text-3xl font-bold text-white mb-2 text-center">Bem-vindo de volta</h2>
             
-            {/* Box de Teste */}
             <div class="bg-yellow-500/10 border border-yellow-500/20 p-2 mb-6 rounded text-center text-xs text-yellow-500">
                Teste: <b>admin@adsly.com</b> | Senha: <b>123456</b>
             </div>
@@ -33,7 +40,7 @@ export const createAuthController = (authService: AuthService) => {
                   type="email" 
                   required
                   class="w-full bg-zinc-950 border border-zinc-700 rounded-lg px-4 py-3 text-white focus:border-yellow-500 focus:ring-1 focus:ring-yellow-500 outline-none transition" 
-                  placeholder="seu@email.com" 
+                  placeholder="admin@adsly.com" 
                 />
               </div>
               
@@ -47,7 +54,7 @@ export const createAuthController = (authService: AuthService) => {
                   type="password" 
                   required
                   class="w-full bg-zinc-950 border border-zinc-700 rounded-lg px-4 py-3 text-white focus:border-yellow-500 focus:ring-1 focus:ring-yellow-500 outline-none transition" 
-                  placeholder="••••••••" 
+                  placeholder="123456" 
                 />
               </div>
 
@@ -75,16 +82,13 @@ export const createAuthController = (authService: AuthService) => {
     const isValid = await authService.validateUser(email, password);
 
     if (isValid) {
-        // Define o cookie de sessão (simulado com 'true_token_secret')
         setCookie(c, 'auth_token', 'true_token_secret', { 
             path: '/', 
             httpOnly: true,
-            maxAge: 60 * 60 * 24 // 1 dia
+            maxAge: 60 * 60 * 24 
         });
         return c.redirect('/dashboard/my-orders');
     } else {
-        // Em caso de erro, por enquanto retornamos um texto simples
-        // Poderia ser um redirect com parâmetro de erro
         return c.text('Usuário ou senha inválidos', 401);
     }
   });
@@ -93,7 +97,7 @@ export const createAuthController = (authService: AuthService) => {
   app.get('/register', (c) => {
     return c.html(
       <Layout title="Criar Conta - Adsly">
-        <Navbar />
+        <Navbar isAuthenticated={false} />
         <div class="min-h-[calc(100vh-64px)] flex items-center justify-center p-4">
           <div class="w-full max-w-md bg-zinc-900 border border-zinc-800 rounded-2xl p-8 shadow-2xl relative">
             

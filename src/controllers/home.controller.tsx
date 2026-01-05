@@ -1,22 +1,25 @@
 // src/controllers/home.controller.tsx
 import { Hono } from 'hono';
+import { getCookie } from 'hono/cookie'; // Importado getCookie
 import { Layout } from '../components/templates/Layout.tsx';
 import { Navbar } from '../components/organisms/Navbar.tsx';
 import { ProductCard } from '../components/molecules/ProductCard.tsx';
 import { ProductService } from '../modules/products/product.service.ts';
 
-// Factory Function para injetar dependências (Inversão de Controle)
 export const createHomeController = (productService: ProductService) => {
   const app = new Hono();
 
   app.get('/', async (c) => {
-    // Busca os dados do serviço
     const products = await productService.getAllProducts();
 
-    // Retorna a View
+    // Verifica se o usuário está logado
+    const authToken = getCookie(c, 'auth_token');
+    const isAuthenticated = !!authToken; 
+
     return c.html(
       <Layout title="Adsly - Agência de Contingência">
-        <Navbar />
+        {/* Passamos o estado dinâmico para a Navbar */}
+        <Navbar isAuthenticated={isAuthenticated} />
         
         {/* Hero Section */}
         <section class="bg-zinc-900/30 py-12 border-b border-zinc-800">
@@ -46,7 +49,6 @@ export const createHomeController = (productService: ProductService) => {
             ))}
           </div>
         
-          {/* Banner CTA */}
           <div class="mt-16 bg-zinc-900 rounded-2xl p-8 text-center border border-zinc-800 relative overflow-hidden">
               <div class="relative z-10">
                   <h3 class="text-2xl font-bold text-white mb-2">Não encontrou o que procurava?</h3>
