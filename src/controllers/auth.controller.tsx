@@ -1,12 +1,14 @@
-// src/controllers/auth.controller.tsx
 import { Hono } from 'hono';
+import { setCookie } from 'hono/cookie';
 import { Layout } from '../components/templates/Layout.tsx';
 import { Navbar } from '../components/organisms/Navbar.tsx';
+import { AuthService } from '../modules/auth/auth.service.ts'; // Certifique-se que o caminho está correto
 
-export const createAuthController = () => {
+// Injetando o AuthService como dependência
+export const createAuthController = (authService: AuthService) => {
   const app = new Hono();
 
-  // Rota: GET /auth/login
+  // Rota: GET /auth/login (Exibe o formulário)
   app.get('/login', (c) => {
     return c.html(
       <Layout title="Entrar - Adsly">
@@ -17,12 +19,22 @@ export const createAuthController = () => {
             <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-yellow-600 to-yellow-400"></div>
 
             <h2 class="text-3xl font-bold text-white mb-2 text-center">Bem-vindo de volta</h2>
-            <p class="text-zinc-500 text-center mb-8">Acesse sua conta para gerenciar seus pedidos</p>
+            
+            {/* Box de Teste */}
+            <div class="bg-yellow-500/10 border border-yellow-500/20 p-2 mb-6 rounded text-center text-xs text-yellow-500">
+               Teste: <b>admin@adsly.com</b> | Senha: <b>123456</b>
+            </div>
 
-            <form class="space-y-5">
+            <form method="POST" action="/auth/login" class="space-y-5">
               <div>
                 <label class="block text-sm font-medium text-gray-400 mb-1.5">E-mail</label>
-                <input type="email" class="w-full bg-zinc-950 border border-zinc-700 rounded-lg px-4 py-3 text-white focus:border-yellow-500 focus:ring-1 focus:ring-yellow-500 outline-none transition" placeholder="seu@email.com" />
+                <input 
+                  name="email" 
+                  type="email" 
+                  required
+                  class="w-full bg-zinc-950 border border-zinc-700 rounded-lg px-4 py-3 text-white focus:border-yellow-500 focus:ring-1 focus:ring-yellow-500 outline-none transition" 
+                  placeholder="seu@email.com" 
+                />
               </div>
               
               <div>
@@ -30,10 +42,16 @@ export const createAuthController = () => {
                     <label class="block text-sm font-medium text-gray-400">Senha</label>
                     <a href="#" class="text-xs text-yellow-500 hover:underline">Esqueceu?</a>
                 </div>
-                <input type="password" class="w-full bg-zinc-950 border border-zinc-700 rounded-lg px-4 py-3 text-white focus:border-yellow-500 focus:ring-1 focus:ring-yellow-500 outline-none transition" placeholder="••••••••" />
+                <input 
+                  name="password" 
+                  type="password" 
+                  required
+                  class="w-full bg-zinc-950 border border-zinc-700 rounded-lg px-4 py-3 text-white focus:border-yellow-500 focus:ring-1 focus:ring-yellow-500 outline-none transition" 
+                  placeholder="••••••••" 
+                />
               </div>
 
-              <button class="w-full bg-yellow-500 text-black font-bold py-3 rounded-lg hover:bg-yellow-400 transition shadow-[0_0_10px_rgba(234,179,8,0.2)]">
+              <button type="submit" class="w-full bg-yellow-500 text-black font-bold py-3 rounded-lg hover:bg-yellow-400 transition shadow-[0_0_10px_rgba(234,179,8,0.2)]">
                 Entrar na Conta
               </button>
             </form>
@@ -46,6 +64,29 @@ export const createAuthController = () => {
         </div>
       </Layout>
     );
+  });
+
+  // Rota: POST /auth/login (Processa o login)
+  app.post('/login', async (c) => {
+    const body = await c.req.parseBody();
+    const email = body['email'] as string;
+    const password = body['password'] as string;
+
+    const isValid = await authService.validateUser(email, password);
+
+    if (isValid) {
+        // Define o cookie de sessão (simulado com 'true_token_secret')
+        setCookie(c, 'auth_token', 'true_token_secret', { 
+            path: '/', 
+            httpOnly: true,
+            maxAge: 60 * 60 * 24 // 1 dia
+        });
+        return c.redirect('/dashboard/my-orders');
+    } else {
+        // Em caso de erro, por enquanto retornamos um texto simples
+        // Poderia ser um redirect com parâmetro de erro
+        return c.text('Usuário ou senha inválidos', 401);
+    }
   });
 
   // Rota: GET /auth/register
