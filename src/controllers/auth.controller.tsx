@@ -4,6 +4,7 @@ import { setCookie, deleteCookie } from 'hono/cookie';
 import { Layout } from '../components/templates/Layout.tsx';
 import { Navbar } from '../components/organisms/Navbar.tsx';
 import { AuthService } from '../modules/auth/auth.service.ts';
+import { Button } from '../components/atoms/Button.tsx';
 
 export const createAuthController = (authService: AuthService) => {
   const app = new Hono();
@@ -124,7 +125,9 @@ export const createAuthController = (authService: AuthService) => {
 
             <div className="mt-6 text-center text-sm text-zinc-500">
               Já tem uma conta? 
-              <a href="/auth/login" className="text-yellow-500 font-bold hover:underline ml-1">Entrar</a>
+              <a href="/auth/login">
+  <Button variant="primary" className="px-5 py-2 text-sm">Entrar</Button>
+</a>
             </div>
           </div>
         </div>
