@@ -1,5 +1,6 @@
 import { PropsWithChildren } from "hono/jsx";
 import { CartDrawer } from "../organisms/CartDrawer.tsx";
+import { CartDrawerScript } from "../atoms/scripts/CartDrawerScript.tsx"; 
 
 interface LayoutProps extends PropsWithChildren {
   title: string;
@@ -24,8 +25,14 @@ export const Layout = ({ children, title, isAuthenticated = false }: LayoutProps
         
         {children}
 
-        {/* Agora sim funciona pois é tudo JSX */}
+        {/* Componente visual do Carrinho */}
         <CartDrawer isAuthenticated={isAuthenticated} items={[]} />
+        
+        {/* Injeção do Script de comportamento.
+            Posicionado antes do fechamento do body para garantir 
+            que o DOM já esteja disponível para manipulação.
+        */}
+        <CartDrawerScript />
         
       </body>
     </html>

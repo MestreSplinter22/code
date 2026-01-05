@@ -1,9 +1,8 @@
-// src/components/organisms/CartDrawer.tsx
 import { CartItem } from '../molecules/CartItem.tsx';
 import { Product } from '../../modules/products/product.entity.ts';
-import { CartDrawerScript } from '../atoms/scripts/CartDrawerScript.tsx';
+import { calculateCartTotal } from '../../utils/cart.utils.ts'; //
 
-// Importação das novas moléculas (ajuste os caminhos conforme onde você salvou)
+// Importação das moléculas
 import { CartDrawerHeader } from '../molecules/cart/CartDrawerHeader.tsx';
 import { CartDrawerFooter } from '../molecules/cart/CartDrawerFooter.tsx';
 import { CartDrawerEmpty } from '../molecules/cart/CartDrawerEmpty.tsx';
@@ -15,19 +14,19 @@ interface CartDrawerProps {
 }
 
 export const CartDrawer = ({ isAuthenticated, items = [] }: CartDrawerProps) => {
-  // Lógica de negócio simples (calculo de total) pode ficar aqui ou vir pronta do controller
-  const total = items.reduce((acc, item) => acc + item.price, 0);
+  // 1. A lógica matemática foi delegada para o utilitário
+  const total = calculateCartTotal(items);
   const hasItems = items.length > 0;
+
+  // 2. Removemos o <CartDrawerScript /> daqui. 
+  // O componente visual não deve ser responsável por injetar scripts globais.
 
   return (
     <>
-      {/* Script de Comportamento Isolado */}
-      <CartDrawerScript />
-
       {/* Overlay */}
       <div 
         id="cart-overlay" 
-        onClick="toggleCart()" 
+        onclick="toggleCart()" // Nota: em Hono/JSX puro usa-se onclick (minúsculo) string ou função dependendo da config
         className="fixed inset-0 bg-black/80 z-[60] hidden transition-opacity duration-300 opacity-0 backdrop-blur-sm"
       />
 
@@ -51,13 +50,13 @@ export const CartDrawer = ({ isAuthenticated, items = [] }: CartDrawerProps) => 
               <CartItem 
                 key={`${item.id}-${index}`} 
                 product={item} 
-                onRemove={(id) => console.log('Remover item', id)} 
+                onRemove={(id) => console.log('Remover item (client-side needed)', id)} 
               />
             ))
           )}
         </div>
 
-        {/* Footer (Só renderiza se tiver itens e estiver logado) */}
+        {/* Footer */}
         {isAuthenticated && hasItems && (
           <CartDrawerFooter total={total} />
         )}
