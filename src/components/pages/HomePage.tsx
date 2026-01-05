@@ -11,9 +11,10 @@ import { productToCardProps } from '../../mappers/product.mapper.ts';
 interface HomePageProps {
   products: Product[];
   isAuthenticated: boolean;
+  drawerScript?: string;
 }
 
-export const HomePage = ({ products, isAuthenticated }: HomePageProps) => {
+export const HomePage = ({ products, isAuthenticated, drawerScript }: HomePageProps) => {
   const drawerId = "home_cart_drawer";
   const toggleFn = `window.AdslyDrawer && window.AdslyDrawer.toggle('${drawerId}')`;
 
@@ -26,7 +27,8 @@ export const HomePage = ({ products, isAuthenticated }: HomePageProps) => {
             isAuthenticated={isAuthenticated} 
             items={[]} 
             total={0} 
-            onClose={toggleFn} 
+            onClose={toggleFn}
+            scriptContent={drawerScript}
           />
       }
     >

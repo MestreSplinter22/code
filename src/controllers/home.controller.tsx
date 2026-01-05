@@ -3,6 +3,7 @@ import { Hono } from 'hono';
 import { getCookie } from 'hono/cookie';
 import { ProductService } from '../modules/products/product.service.ts';
 import { HomePage } from '../components/pages/HomePage.tsx';
+import { loadDrawerScript } from '../core/scripts/loadUiScripts.ts';
 
 export const createHomeController = (productService: ProductService) => {
   const app = new Hono();
@@ -14,10 +15,11 @@ export const createHomeController = (productService: ProductService) => {
     // 2. Lógica de Autenticação (Lógica de Controle/Sessão)
     const authToken = getCookie(c, 'auth_token');
     const isAuthenticated = !!authToken;
+    const drawerScript = loadDrawerScript();
 
     // 3. Renderização (Delegação para a View)
     return c.html(
-      <HomePage products={products} isAuthenticated={isAuthenticated} />
+      <HomePage products={products} isAuthenticated={isAuthenticated} drawerScript={drawerScript} />
     );
   });
 

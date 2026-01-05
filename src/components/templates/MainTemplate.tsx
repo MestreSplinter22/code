@@ -7,13 +7,15 @@ interface MainTemplateProps extends PropsWithChildren {
   pageTitle: string;
   headerTitle: string;
   isAuthenticated: boolean;
+  drawerScript?: string;
 }
 
 export const MainTemplate = ({ 
   children, 
   pageTitle, 
   headerTitle, 
-  isAuthenticated 
+  isAuthenticated,
+  drawerScript
 }: MainTemplateProps) => {
   const drawerId = "app_cart_drawer";
   const toggleFn = `window.AdslyDrawer && window.AdslyDrawer.toggle('${drawerId}')`;
@@ -27,7 +29,8 @@ export const MainTemplate = ({
             isAuthenticated={isAuthenticated} 
             items={[]} 
             total={0} 
-            onClose={toggleFn} 
+            onClose={toggleFn}
+            scriptContent={drawerScript}
           />
       }
     >

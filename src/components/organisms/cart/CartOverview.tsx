@@ -4,12 +4,11 @@ import { CartEmptyState } from '../../molecules/cart/CartEmptyState.tsx';
 
 interface CartOverviewProps {
   items: CartItemProps[];
-  onRemoveItem: (id: string) => void;
   total: number;
   isAuthenticated: boolean;
 }
 
-export const CartOverview = ({ items, onRemoveItem, total, isAuthenticated }: CartOverviewProps) => {
+export const CartOverview = ({ items, total, isAuthenticated }: CartOverviewProps) => {
   const hasItems = items && items.length > 0;
 
   return (
@@ -21,7 +20,6 @@ export const CartOverview = ({ items, onRemoveItem, total, isAuthenticated }: Ca
             <CartItem 
               key={item.id}
               {...item}
-              onRemove={onRemoveItem} 
             />
           ))
         ) : (

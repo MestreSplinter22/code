@@ -8,14 +8,10 @@ interface CartPageProps {
   isAuthenticated: boolean;
   items: Product[];
   total: number;
+  drawerScript?: string;
 }
 
-export const CartPage = ({ isAuthenticated, items, total }: CartPageProps) => {
-
-  const handleRemoveItem = (id: string) => {
-    // Lógica para remover o item do carrinho (ex: chamar um serviço)
-    console.log(`Removendo item com ID: ${id}`);
-  };
+export const CartPage = ({ isAuthenticated, items, total, drawerScript }: CartPageProps) => {
 
   const cartItemsProps: CartItemProps[] = items.map(productToCartItemProps);
 
@@ -24,12 +20,12 @@ export const CartPage = ({ isAuthenticated, items, total }: CartPageProps) => {
       pageTitle="Meu Carrinho - Adsly"
       headerTitle="Seu Carrinho de Compras"
       isAuthenticated={isAuthenticated}
+      drawerScript={drawerScript}
     >
       <CartOverview 
         items={cartItemsProps} 
         total={total} 
         isAuthenticated={isAuthenticated} 
-        onRemoveItem={handleRemoveItem}
       />
     </MainTemplate>
   );

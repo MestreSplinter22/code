@@ -17,9 +17,9 @@ interface CartDrawerProps {
   items?: CartDrawerItemData[];
   total: number;
   onClose?: string;
-  onRemoveItem?: (id: string) => void;
   // Identificador do DOM para o drawer, para evitar conflitos de ID global
   id?: string;
+  scriptContent?: string;
 }
 
 export const CartDrawer = ({ 
@@ -27,20 +27,12 @@ export const CartDrawer = ({
   items = [], 
   total,
   onClose,
-  onRemoveItem = (id) => console.log('Remove item:', id),
-  id = 'cart_drawer_component'
+  id = 'cart_drawer_component',
+  scriptContent
 }: CartDrawerProps) => {
   const hasItems = items.length > 0;
   const overlayId = `${id}-overlay`;
   const drawerId = `${id}-content`;
-  
-  // Read script content
-  let scriptContent = "";
-  try {
-      scriptContent = Deno.readTextFileSync("src/scripts/ui-behaviors/drawer.js");
-  } catch (e) {
-      console.error("Failed to load drawer script", e);
-  }
 
   // Use the global function defined in drawer.js
   const defaultCloseAction = `window.AdslyDrawer && window.AdslyDrawer.toggle('${id}')`;
@@ -48,7 +40,7 @@ export const CartDrawer = ({
 
   return (
     <>
-      <script dangerouslySetInnerHTML={{ __html: scriptContent }} />
+      {scriptContent && <script dangerouslySetInnerHTML={{ __html: scriptContent }} />}
       
       {/* Overlay */}
       <div 
@@ -78,7 +70,6 @@ export const CartDrawer = ({
                 title={item.title}
                 price={item.price}
                 imageUrl={item.imageUrl}
-                onRemove={onRemoveItem} 
               />
             ))
           )}

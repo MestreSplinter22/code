@@ -6,10 +6,9 @@ export interface CartItemProps {
   imageUrl: string;
   title: string;
   price: number;
-  onRemove: (id: string) => void;
 }
 
-export const CartItem = ({ id, imageUrl, title, price, onRemove }: CartItemProps) => {
+export const CartItem = ({ id, imageUrl, title, price }: CartItemProps) => {
   return (
     <div className="flex gap-4 p-3 bg-zinc-950/50 rounded-lg border border-zinc-800 animate-fade-in">
        {/* Placeholder de imagem ou ícone baseado na categoria */}
@@ -26,13 +25,16 @@ export const CartItem = ({ id, imageUrl, title, price, onRemove }: CartItemProps
              {formatCurrency(price)}
            </span>
            
-           <button 
-             onClick={() => onRemove(id)}
-             className="flex items-center gap-1 text-[10px] text-red-500 hover:text-red-400 hover:underline transition"
-           >
-             <Icon name="close" className="w-3 h-3" />
-             Remover
-           </button>
+           <form method="POST" action="/cart/remove">
+             <input type="hidden" name="id" value={id} />
+             <button 
+               type="submit"
+               className="flex items-center gap-1 text-[10px] text-red-500 hover:text-red-400 hover:underline transition"
+             >
+               <Icon name="close" className="w-3 h-3" />
+               Remover
+             </button>
+           </form>
          </div>
        </div>
     </div>
