@@ -7,17 +7,16 @@ interface CartDrawerFooterProps {
 }
 
 export const CartDrawerFooter = ({ total }: CartDrawerFooterProps) => (
-  <div className="p-6 border-t border-zinc-800 bg-zinc-950/50 safe-area-bottom">
-    <div className="flex justify-between items-center mb-4">
-      <span className="text-gray-400">Total</span>
-      <span className="text-2xl font-bold text-white">
-        {formatCurrency(total)}
-      </span>
-    </div>
-    <a href="/checkout" className="block">
-      <Button fullWidth variant="whatsapp">
-        Finalizar Compra
+    <div className="p-6 border-t border-zinc-800 bg-zinc-950">
+      <div className="flex justify-between items-center mb-4">
+        <span className="text-zinc-400">Total a pagar:</span>
+        <span className="text-2xl font-bold text-white">R$ {total.toFixed(2)}</span>
+      </div>
+      <Button fullWidth variant="success">
+        Finalizar no WhatsApp
       </Button>
-    </a>
-  </div>
+      <p className="text-xs text-center text-zinc-600 mt-3">
+        Ambiente seguro e criptografado
+      </p>
+    </div>
 );

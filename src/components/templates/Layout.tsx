@@ -1,6 +1,6 @@
 import { PropsWithChildren } from "hono/jsx";
 import { CartDrawer } from "../organisms/CartDrawer.tsx";
-import { CartDrawerScript } from "../atoms/scripts/CartDrawerScript.tsx"; 
+import { CartDrawerScript } from "./scripts/CartDrawerScript.tsx"; 
 
 interface LayoutProps extends PropsWithChildren {
   title: string;

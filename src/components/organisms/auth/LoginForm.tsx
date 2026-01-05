@@ -3,9 +3,10 @@ import { FormField } from '../../molecules/FormField.tsx';
 
 interface LoginFormProps {
   error?: string;
+  demoCredentials?: { email: string; pass: string };
 }
 
-export const LoginForm = ({ error }: LoginFormProps) => {
+export const LoginForm = ({ error, demoCredentials }: LoginFormProps) => {
   return (
     <div className="w-full max-w-md bg-zinc-900 border border-zinc-800 rounded-2xl p-8 shadow-2xl relative overflow-hidden">
       {/* Detalhe Decorativo (pode virar um átomo se usado em outros lugares) */}
@@ -13,10 +14,12 @@ export const LoginForm = ({ error }: LoginFormProps) => {
 
       <h2 className="text-3xl font-bold text-white mb-2 text-center">Bem-vindo de volta</h2>
       
-      {/* Aviso de Teste (Componente auxiliar ou mantido aqui por ser específico desta view) */}
-      <div className="bg-yellow-500/10 border border-yellow-500/20 p-2 mb-6 rounded text-center text-xs text-yellow-500">
-          Teste: <b>admin@adsly.com</b> | Senha: <b>123456</b>
-      </div>
+      {/* Aviso de Teste (Injetado via props) */}
+      {demoCredentials && (
+        <div className="bg-yellow-500/10 border border-yellow-500/20 p-2 mb-6 rounded text-center text-xs text-yellow-500">
+            Teste: <b>{demoCredentials.email}</b> | Senha: <b>{demoCredentials.pass}</b>
+        </div>
+      )}
 
       {error && (
         <div className="bg-red-500/10 border border-red-500/20 p-3 mb-4 rounded text-center text-sm text-red-400">

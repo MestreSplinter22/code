@@ -2,7 +2,7 @@
 import { PropsWithChildren } from 'hono/jsx';
 
 interface ButtonProps extends PropsWithChildren {
-  variant?: 'primary' | 'outline' | 'ghost' | 'danger' | 'whatsapp'; // Adicionei 'whatsapp' pois vi um botão verde no seu código
+  variant?: 'primary' | 'outline' | 'ghost' | 'danger' | 'success'; // Renomeado 'whatsapp' para 'success' para manter a abstração
   fullWidth?: boolean;
   className?: string;
   [key: string]: any; // Para aceitar onClick, type="submit", etc.
@@ -16,7 +16,7 @@ export const Button = ({ children, variant = 'primary', fullWidth, className, ..
     outline: "bg-transparent border border-yellow-600 text-yellow-500 hover:bg-yellow-500 hover:text-black",
     ghost: "bg-transparent text-gray-300 hover:text-white",
     danger: "text-red-500 border border-red-900/50 hover:bg-red-900/20",
-    whatsapp: "bg-green-600 text-white hover:bg-green-500" // Do banner "Não encontrou?"
+    success: "bg-green-600 text-white hover:bg-green-500" // Cor verde genérica (ex: finalizar compra, whatsapp)
   };
 
   const widthClass = fullWidth ? 'w-full' : '';
