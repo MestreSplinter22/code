@@ -1,42 +1,33 @@
-// src/components/templates/Layout.tsx
-import { html } from "hono/html";
+import { PropsWithChildren } from "hono/jsx";
 import { CartDrawer } from "../organisms/CartDrawer.tsx";
 
-// Adicionada a prop opcional isAuthenticated
-export const Layout = (props: {
-  children: any;
+interface LayoutProps extends PropsWithChildren {
   title: string;
   isAuthenticated?: boolean;
-}) => {
-  // Define false como padrão se não for passado
-  const isAuthenticated = props.isAuthenticated ?? false;
+}
 
-  return html`
-    <!DOCTYPE html>
-    <html lang="pt-BR" class="dark">
+export const Layout = ({ children, title, isAuthenticated = false }: LayoutProps) => {
+  return (
+    <html lang="pt-BR" className="dark">
       <head>
-        <meta charset="UTF-8" />
+        <meta charSet="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>${props.title}</title>
+        <title>{title}</title>
         <script src="https://cdn.tailwindcss.com"></script>
-        <style>
-          .text-gold {
-            color: #ffc107;
-          }
-          .bg-card-gradient {
-            background: linear-gradient(180deg, #1a1a1a 0%, #0a0a0a 100%);
-          }
-          body.modal-open {
-            overflow: hidden;
-          }
-        </style>
+        <style dangerouslySetInnerHTML={{ __html: `
+          .text-gold { color: #ffc107; }
+          .bg-card-gradient { background: linear-gradient(180deg, #1a1a1a 0%, #0a0a0a 100%); }
+          body.modal-open { overflow: hidden; }
+        `}} />
       </head>
-      <body class="bg-black text-white font-sans antialiased relative">
-        ${props.children} // Se o Layout for .tsx (JSX)
-        <CartDrawer isAuthenticated="{isAuthenticated}" items="{[]}" />
-        // (Passe items=[] temporariamente até ter a lógica de carrinho no
-        backend)
+      <body className="bg-black text-white font-sans antialiased relative">
+        
+        {children}
+
+        {/* Agora sim funciona pois é tudo JSX */}
+        <CartDrawer isAuthenticated={isAuthenticated} items={[]} />
+        
       </body>
     </html>
-  `;
+  );
 };
